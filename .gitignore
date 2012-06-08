@@ -7,3 +7,4 @@ deploy/*
 *.cache
 TestResults/
 packages/
+App_Data/
