@@ -5,13 +5,18 @@
 <ul>
 	@foreach (var user in Model)
 	{
-		<li>@user.Name (@user.EmailAddress)</li>
+		<li>@user.Name (@user.EmailAddress)   phone:(@user.Phone) </li>
 	}
 </ul>
 
 @using(Html.BeginForm("Create", "Home", FormMethod.Post))
 {
-	<input type="text" name="Name" />
-	<input type="text" name="EmailAddress" />
-	<input type="submit" value="Submit" />
+	<span>name</span><input type="text" name="Name" />
+	
+	<span>email</span><input type="text" name="EmailAddress" />
+
+	<span>phone</span><input type="text" name="Phone" />	
+    
+    
+    <input type="submit" value="Submit" />
 }
