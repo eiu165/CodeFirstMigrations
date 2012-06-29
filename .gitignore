@@ -8,3 +8,4 @@ deploy/*
 TestResults/
 packages/
 App_Data/
+_ReSharper*
