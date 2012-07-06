@@ -31,8 +31,10 @@ namespace Core.Persistence
 
             protected override void Seed(Context context)
             {
-                var u = new User {Name = "alpha", EmailAddress = "a@test.com"};
+                var u = new User { Name = "alpha", EmailAddress = "a@test.com" };
                 context.Users.Add(u);
+                context.Users.Add(new User { Name = "bbb", EmailAddress = "bbbb@test.com" });
+                context.Users.Add(new User { Name = "ccc", EmailAddress = "ccc@test.com" });
                 context.SaveChanges();
             }
         }
