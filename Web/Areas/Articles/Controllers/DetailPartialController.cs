@@ -16,6 +16,28 @@ namespace Web.Areas.Articles.Controllers
             return View();
         }
 
+
+
+        //[AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
+        public ActionResult PostDetails(string name, string email)
+        {
+            var d = new DetailPartialModel { 
+                Name = "Justin", 
+                Title = "the best part of the web", 
+                Url = "the-best-part-of-the-web" , 
+                Lock = false, 
+                LockedBy = "Justin", 
+                Status = "Edit", 
+                AssignedTo = "Justin"
+            };
+
+            //render the new customer's listitem and return the result
+            return PartialView("DetailPartial", d);
+        }
+
+
+
     }
 
      public class DetailPartialModel
