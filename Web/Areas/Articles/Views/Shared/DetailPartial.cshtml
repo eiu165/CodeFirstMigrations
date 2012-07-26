@@ -3,49 +3,48 @@
 
 
 
-<div id="WorkDetailPartial" class="partialTop">
-    @if (@Model == null)
-    { 
-        <p id="DetailPartial" class="hand partialLoad">  click to get load Data </p>  
-    }
-    else
-    { 
-        <table >
-            <tr>
-                <td>Name</td>
-                <td>@Model.Name</td>
-            </tr>
-            <tr>
-                <td>Title</td>
-                <td>@Model.Title</td>
-            </tr>
-            <tr>
-                <td>Url</td>
-                <td>@Model.Url</td>
-            </tr>
-            <tr>
-                <td>Lock</td>
-                <td>@Model.Lock</td>
-            </tr>
-            <tr>
-                <td>Url</td>
-                <td>@Model.Url</td>
-            </tr>
-            <tr>
-                <td>LockedBy</td>
-                <td>@Model.LockedBy</td>
-            </tr>
-            <tr>
-                <td>Status</td>
-                <td>@Model.Status</td>
-            </tr>
-            <tr>
-                <td>AssignedTo</td>
-                <td>@Model.AssignedTo</td>
-            </tr>
-        </table>
-    }
-</div>
+@if (@Model == null)
+{ 
+    <span  id="DetailPartial"  class="hand partialLoad">  show </span>  
+}
+else
+{  
+    <span class="hand collapser  "> hide </span>   
+    <table >
+        <tr>
+            <td>Name</td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>@Model.Title</td>
+        </tr>
+        <tr>
+            <td>Url</td>
+            <td>@Model.Url</td>
+        </tr>
+        <tr>
+            <td>Lock</td>
+            <td>@Model.Lock</td>
+        </tr>
+        <tr>
+            <td>Url</td>
+            <td>@Model.Url</td>
+        </tr>
+        <tr>
+            <td>LockedBy</td>
+            <td>@Model.LockedBy</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>@Model.Status</td>
+        </tr>
+        <tr>
+            <td>AssignedTo</td>
+            <td>@Model.AssignedTo</td>
+        </tr>
+    </table>
+} 
 
-
+ 
  

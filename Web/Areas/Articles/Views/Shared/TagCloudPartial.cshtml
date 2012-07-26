@@ -1,2 +1,19 @@
-﻿@model Web.Areas.Articles.Controllers.TagCloudPartialModel
+﻿@model   IEnumerable<Web.Areas.Articles.Controllers.TagCloudPartialModel>
 
+
+ 
+@if (@Model == null)
+{ 
+    <span  id="TagCloudPartial"  class="hand partialLoad">  show </span>  
+}
+else
+{  
+    <span class="hand collapser  "> hide </span>  
+    <div>
+    @foreach (var r in Model)
+    { 
+        <div> @r.Name    </div>                  
+    }
+    </div>
+} 
+ 
