@@ -21,10 +21,15 @@
     @Assets.Script("underscore-min.js")
     @Assets.Script("backbone-min.js")
 }
-@helper Script(string scriptFile)
+
+
+@helper Script(string scriptFile, string area = "")
 {
-    <script type="text/javascript" src="/Content/Scripts/@scriptFile"></script>
+    var loc = (area == "") ? "/Content/Scripts/" + scriptFile : "/Areas/" + @area + "/Scripts/" + scriptFile;
+    <script type="text/javascript" src="@loc"></script>
 }
+
+
 @helper jQuery(bool useGoogle = true)
 {
     if (useGoogle)

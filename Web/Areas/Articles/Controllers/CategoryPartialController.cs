@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Web.Areas.Articles.Controllers
 {
-    public class ArticleCategoryPartialController : Controller
+    public class CategoryPartialController : Controller
     {
         //
         // GET: /Articles/ArticleCategoryPartial/
@@ -15,6 +15,15 @@ namespace Web.Areas.Articles.Controllers
         {
             return View();
         }
+    }
 
+    public class CategoryPartialModel
+    {
+        public string Name { get; set; }
+        public bool IsInCategory { get; set; }
+        public bool IsPrimary { get; set; } 
     }
 }
+
+
+

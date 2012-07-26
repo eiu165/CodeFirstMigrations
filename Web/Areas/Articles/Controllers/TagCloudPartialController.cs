@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace Web.Areas.Articles.Controllers
 {
-    public class ArticleRegionPartialController : Controller
+    public class TagCloudPartialController : Controller
     {
         //
-        // GET: /Articles/ArticleRegionPartial/
+        // GET: /Articles/TagCloudPartial/
 
         public ActionResult Index()
         {
@@ -17,4 +17,10 @@ namespace Web.Areas.Articles.Controllers
         }
 
     }
+    public class TagCloudPartialModel
+    {
+        public string Name { get; set; }
+        public bool IsInTag { get; set; } 
+    }
+
 }

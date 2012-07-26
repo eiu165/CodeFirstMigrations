@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Web.Areas.Articles.Controllers
 {
-    public class ArticleHistoryPartialController : Controller
+    public class HistoryPartialController : Controller
     {
         //
         // GET: /Articles/ArticleHistoryPartial/
@@ -16,5 +16,11 @@ namespace Web.Areas.Articles.Controllers
             return View();
         }
 
+    }
+    public class HistoryPartialModel
+    {
+        public string UpdatedBy { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public string Content { get; set; } 
     }
 }

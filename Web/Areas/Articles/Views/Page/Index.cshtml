@@ -19,7 +19,7 @@
         </div>
     
         <div id="adminPanel" class=""> 
-            @Html.Partial("_ArticleDetailPartial")  
+            @Html.Partial("DetailPartial")  
         </div> 
     } 
 }
@@ -29,7 +29,7 @@
 { 
     @if (ViewBag.HasAdminPanel)
     {
-        @Assets.Script("_ArticleDetailPartial.js")  
+        @Assets.Script(scriptFile:"DetailPartial.js", area:"Articles")  
     } 
  }
 

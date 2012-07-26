@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace Web.Areas.Articles.Controllers
 {
-    public class ArticleDetailPartialController : Controller
+    public class ImagesPartialController : Controller
     {
         //
-        // GET: /Articles/ArticleDetailPartial/
+        // GET: /Articles/ArticleImages/
 
         public ActionResult Index()
         {
@@ -17,4 +17,6 @@ namespace Web.Areas.Articles.Controllers
         }
 
     }
+
+
 }
