@@ -73,6 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Articles\ArticlesAreaRegistration.cs" />
+    <Compile Include="Areas\Articles\Controllers\ArticleCategoryPartialController.cs" />
+    <Compile Include="Areas\Articles\Controllers\ArticleDetailPartialController.cs" />
+    <Compile Include="Areas\Articles\Controllers\ArticleHistoryPartialController.cs" />
+    <Compile Include="Areas\Articles\Controllers\ArticleImagesPartialController.cs" />
+    <Compile Include="Areas\Articles\Controllers\ArticleRegionPartialController.cs" />
     <Compile Include="Areas\Articles\Controllers\PageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

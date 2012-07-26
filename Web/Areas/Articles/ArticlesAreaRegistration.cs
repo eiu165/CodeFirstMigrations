@@ -16,6 +16,11 @@ namespace Web.Areas.Articles
         {
             context.MapRoute(
                 "Articles_default",
+                "Articles/{articleUrl}",
+                new { controller = "Page", action = "Index", articleUrl = "" }
+            ); 
+            context.MapRoute(
+                "Articles_default_never_get_to",
                 "Articles/{controller}/{action}/{id}",
                 new { controller = "Page", action = "Index", id = UrlParameter.Optional }
             );

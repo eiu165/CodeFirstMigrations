@@ -6,14 +6,13 @@ using System.Web.Mvc;
 
 namespace Web.Areas.Articles.Controllers
 {
-    public class PageController : Controller
+    public class ArticleImagesPartialController : Controller
     {
         //
-        // GET: /Articles/Home/
+        // GET: /Articles/ArticleImages/
 
-        public ActionResult Index(string articleUrl)
+        public ActionResult Index()
         {
-            ViewBag.HasAdminPanel = true;
             return View();
         }
 
