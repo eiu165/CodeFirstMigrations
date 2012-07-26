@@ -8,10 +8,15 @@ namespace Web.Controllers
 	{
 		private readonly Context _context = new Context();
 
-		public ActionResult Index()
-		{
-			return View(_context.Users);
-		}
+        public ActionResult Index()
+        {
+            return View(_context.Users);
+        }
+
+        public ActionResult About()
+        {
+            return View();
+        }
 
 		public ActionResult Create(User user)
 		{
