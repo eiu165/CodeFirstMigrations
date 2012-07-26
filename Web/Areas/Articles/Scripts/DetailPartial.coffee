@@ -1,3 +1,1 @@
-number   = 42
-opposite = true
-alert 'yo'
+$('.account').attr class: 'active'
