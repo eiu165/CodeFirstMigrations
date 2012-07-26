@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+
+ 
+@section AdminPanel
+{
+    @if (ViewBag.HasAdminPanel)
+    {
+        <div id="adminPanelButtons">
+            <a id="panelHide" class=" hand panelButton">Hide Panels</a>
+            <a id="panelShow" class=" hand panelButton hidden">Show Panels</a>
+        </div>
+    
+        <div id="adminPanel" class=""> 
+            @Html.Partial("_ArticleDetailPartial")  
+        </div> 
+    } 
+}
+ 
+ 
+@section AdminPanelScripts
+{ 
+    @if (ViewBag.HasAdminPanel)
+    {
+        @Assets.Script("_ArticleDetailPartial.js")  
+    } 
+ }
+
+
