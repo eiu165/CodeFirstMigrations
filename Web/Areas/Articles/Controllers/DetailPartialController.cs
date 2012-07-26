@@ -20,7 +20,7 @@ namespace Web.Areas.Articles.Controllers
 
         //[AcceptVerbs(HttpVerbs.Post)]
         [HttpPost]
-        public ActionResult PostDetails(string name, string email)
+        public ActionResult Post (string name, string email)
         {
             var d = new DetailPartialModel { 
                 Name = "Justin", 

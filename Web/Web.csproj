@@ -92,8 +92,8 @@
     <Content Include="apple-touch-icon-72x72-precomposed.png" />
     <Content Include="apple-touch-icon-precomposed.png" />
     <Content Include="apple-touch-icon.png" />
-    <Content Include="Areas\Articles\Scripts\DetailPartial.js">
-      <DependentUpon>DetailPartial.coffee</DependentUpon>
+    <Content Include="Areas\Articles\Scripts\Partial.js">
+      <DependentUpon>Partial.coffee</DependentUpon>
     </Content>
     <Content Include="Content\handheld.css" />
     <Content Include="Content\style.css" />
@@ -174,7 +174,7 @@
     <Content Include="Areas\Articles\Views\Shared\TagCloudPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Areas\Articles\Scripts\DetailPartial.coffee" />
+    <None Include="Areas\Articles\Scripts\Partial.coffee" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
