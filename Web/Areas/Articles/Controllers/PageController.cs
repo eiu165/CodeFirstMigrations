@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Web.Controllers
+namespace Web.Areas.Articles.Controllers
 {
     public class PageController : Controller
     {
         //
-        // GET: /Page/
+        // GET: /Articles/Home/
 
         public ActionResult Index()
         {

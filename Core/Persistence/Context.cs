@@ -25,8 +25,8 @@ namespace Core.Persistence
 
         private class TestDataInitializer :
             //CreateDatabaseIfNotExists<Context>
-            //DropCreateDatabaseIfModelChanges<Context>
-            DropCreateDatabaseAlways<Context>
+            DropCreateDatabaseIfModelChanges<Context>
+            //DropCreateDatabaseAlways<Context>
         {
 
             protected override void Seed(Context context)
