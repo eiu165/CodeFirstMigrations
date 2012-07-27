@@ -32,8 +32,22 @@
 
     function DetailPartial() {}
 
+    DetailPartial.prototype.AttachGet = function() {
+      return $('#DetailPartialTop .partialGet').unbind('click').click(function() {
+        var controller, params;
+        controller = 'DetailPartial';
+        params = {
+          name: '',
+          email: 'a@bba.com'
+        };
+        return $.get('/Articles/' + controller + '/Get', params, function(result) {
+          return (new DetailPartial).PostPost(result, controller);
+        });
+      });
+    };
+
     DetailPartial.prototype.AttachLoad = function() {
-      $('#DetailPartialTop .partialLoad').unbind('click').click(function() {
+      $('#DetailPartialTop .partialPost').unbind('click').click(function() {
         var dp, name, params;
         $(this).addClass('waiting');
         name = Partial.GetInputVal('.DetailPartial-Name');
@@ -46,8 +60,7 @@
       });
       return $('#DetailPartialTop .namecheck').unbind('click').click(function() {
         var name;
-        name = Partial.GetInputVal('.DetailPartial-Name');
-        return alert(name);
+        return name = Partial.GetInputVal('.DetailPartial-Name');
       });
     };
 
@@ -70,6 +83,6 @@
 
   detailPartial = new DetailPartial;
 
-  detailPartial.AttachLoad();
+  detailPartial.AttachGet();
 
 }).call(this);

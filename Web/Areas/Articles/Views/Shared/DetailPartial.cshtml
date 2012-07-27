@@ -5,7 +5,7 @@
 
 @if (@Model == null)
 { 
-    <span  id="DetailPartial"  class="hand partialLoad collapser">  show </span>  
+    <span  id="DetailPartial"  class="hand partialGet collapser">  show </span>  
 }
 else
 {  
@@ -22,7 +22,7 @@ else
             <tr><td>AssignedTo</td><td>@Model.AssignedTo</td></tr>
         </table>
         @Form.TextBox(name: "name", labelText: "Name", value: Model.Name, txtfldClass: "DetailPartial-Name") 
-        @Form.Button(value: "Add", myClass: "partialLoad")  
+        @Form.Button(value: "Add", myClass: "partialPost")  
         @Form.Button(value: "namecheck", myClass: "namecheck")  
     </div> 
 } 

@@ -7,16 +7,24 @@ using System.Web.Mvc;
 namespace Web.Areas.Articles.Controllers
 {
     public class DetailPartialController : Controller
-    {
-        //
-        // GET: /Articles/ArticleDetailPartial/
-
-        public ActionResult Index()
+    { 
+        [HttpGet]
+        public ActionResult Get(string name)
         {
-            return View();
+            var d = new DetailPartialModel
+            {
+                Name = "asdfasdf",
+                Title = "the best part of the web",
+                Url = "the-best-part-of-the-web",
+                Lock = false,
+                LockedBy = "Justin",
+                Status = "Edit",
+                AssignedTo = "Justin"
+            };
+
+            //render the new customer's listitem and return the result
+            return PartialView("DetailPartial", d);
         }
-
-
 
         //[AcceptVerbs(HttpVerbs.Post)]
         [HttpPost]
