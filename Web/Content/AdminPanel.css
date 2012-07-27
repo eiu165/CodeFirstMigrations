@@ -13,7 +13,7 @@ border:1px solid #ddd; border-bottom-left-radius: 15px; -moz-border-bottom-left-
 -moz-box-shadow:    0px 0px 22px rgba(50, 50, 50, 0.15);
 box-shadow:         0px 0px 22px rgba(50, 50, 50, 0.15);}
 #adminPanel h4 {font-size:16px; font-weight:bold; float:left; border-bottom:1px solid #666; width:310px; color:#444; margin-bottom:5px;}
-
+.bold {font-weight:bold;}
 
 .partialTop { border-bottom:grey solid  1px; min-height: 50px; }
 

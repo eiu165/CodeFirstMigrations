@@ -1,5 +1,30 @@
 (function() {
-  var DetailPartial, dp;
+  var DetailPartial, Partial, detailPartial;
+
+  Partial = (function() {
+
+    Partial.name = 'Partial';
+
+    function Partial() {}
+
+    Partial.GetInputVal = function(selector) {
+      var ele, r;
+      ele = $(selector);
+      r = '';
+      if (ele.length !== 0) {
+        return r = ele.val();
+      }
+    };
+
+    Partial.AttachCollapser = function(controller) {
+      return $('#' + controller + 'Top .collapser').unbind('click').click(function() {
+        return $(this).toggleClass('expanded').next().toggle();
+      });
+    };
+
+    return Partial;
+
+  })();
 
   DetailPartial = (function() {
 
@@ -9,14 +34,9 @@
 
     DetailPartial.prototype.AttachLoad = function() {
       $('#DetailPartialTop .partialLoad').unbind('click').click(function() {
-        var dp, name, nameEle, params;
+        var dp, name, params;
         $(this).addClass('waiting');
-        nameEle = $('#DetailPartialTop [name="name"]');
-        name = 'xsx';
-        if (nameEle.length !== 0) {
-          name = nameEle.val();
-        }
-        alert(name);
+        name = Partial.GetInputVal('.DetailPartial-Name');
         params = {
           name: name,
           email: 'a@bba.com'
@@ -25,13 +45,9 @@
         return dp.Post('DetailPartial', params);
       });
       return $('#DetailPartialTop .namecheck').unbind('click').click(function() {
-        return alert($('#DetailPartialTop [name="name"]').val);
-      });
-    };
-
-    DetailPartial.prototype.AttachCollapser = function() {
-      return $('#DetailPartialTop .collapser').unbind('click').click(function() {
-        return $(this).toggleClass('expanded').next().toggle();
+        var name;
+        name = Partial.GetInputVal('.DetailPartial-Name');
+        return alert(name);
       });
     };
 
@@ -42,19 +58,18 @@
     };
 
     DetailPartial.prototype.PostPost = function(results, eleId) {
-      var dp;
-      $('#' + eleId).closest('.partialTop').html($(results));
-      dp = new DetailPartial;
-      dp.AttachCollapser();
-      return dp.AttachLoad();
+      alert(eleId);
+      $('#' + eleId + 'Top').closest('.partialTop').html($(results));
+      Partial.AttachCollapser('DetailPartial');
+      return (new DetailPartial).AttachLoad();
     };
 
     return DetailPartial;
 
   })();
 
-  dp = new DetailPartial;
+  detailPartial = new DetailPartial;
 
-  dp.AttachLoad();
+  detailPartial.AttachLoad();
 
 }).call(this);
