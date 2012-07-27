@@ -80,15 +80,21 @@
         <textarea name="@name" id="@name" @attributes >@val</textarea>
     </div>
 }
-@helper Submit(string value = "Save", object myClass = null)
+@helper Submit(string value = "Save",  object myClass = null)
     {
+      Button(value, "submit", myClass);
+}
+@helper Button(string value = "Save", string type = "", object myClass = null)
+    {
+    var typeAttr = (type == "") ? "" : "type='" + type + "'";
     <div>
-        <button type="submit" class="button positive @myClass">
+        <button @typeAttr class="button positive @myClass">
             @value
         </button>
     </div>
     <div class="clear"></div>
 }
+ 
 @helper HiddenID(object id)
     {
     <input type="hidden" name="ID" id="ID" value="@id" />
