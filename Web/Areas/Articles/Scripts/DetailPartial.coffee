@@ -1,22 +1,30 @@
 class DetailPartial
-	AttachLoad: -> $('#DetailPartialTop .partialLoad').unbind('click').click ->  
-			eleId = $(this).addClass('waiting').attr('id')
+	AttachLoad:  -> 
+		$('#DetailPartialTop .partialLoad').unbind('click').click ->  
+			$(this).addClass('waiting')
+			nameEle = $('#DetailPartialTop [name="name"]') 
+			name = 'xsx' 
+			if(nameEle.length != 0)  
+				name =   nameEle.val()  
+			alert name
+			params = {name: name, email: 'a@bba.com'}
 			dp = new DetailPartial 
-			dp.Post('DetailPartial','/Articles/DetailPartial/Post', {name: 'John Doe', email: 'a@bba.com'}  ) 
+			dp.Post('DetailPartial' ,  params ) 
+		$('#DetailPartialTop .namecheck').unbind('click').click -> 
+			alert $('#DetailPartialTop [name="name"]').val
 
-	AttachCollapser: -> $('#DetailPartialTop .collapser').unbind('click').click ->  
-		$(this).toggleClass('expanded').next().toggle();
+	AttachCollapser: -> 
+		$('#DetailPartialTop .collapser').unbind('click').click ->  
+			$(this).toggleClass('expanded').next().toggle();
 
-	Post: (eleId, pathToPost, params) ->  
-		$.post(pathToPost,
+	Post: (controller, params) ->  
+		$.post('/Articles/'+controller+'/Post',
 		params
 		(result) ->  
-			(new DetailPartial).PostPost(result, eleId)) 
+			(new DetailPartial).PostPost(result, controller)) 
 
-	PostPost: (results, eleId) -> 
-		alert eleId
-		top = $('#'+eleId).closest('.partialTop')  
-		top.html($(results))
+	PostPost: (results, eleId) ->  
+		$('#'+eleId).closest('.partialTop').html($(results))  
 		dp = new DetailPartial 
 		dp.AttachCollapser()
 		dp.AttachLoad() 

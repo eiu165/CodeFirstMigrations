@@ -22,8 +22,8 @@ namespace Web.Areas.Articles.Controllers
         [HttpPost]
         public ActionResult Post (string name )
         {
-            var d = new DetailPartialModel { 
-                Name = "Justin", 
+            var d = new DetailPartialModel {
+                Name = name, 
                 Title = "the best part of the web", 
                 Url = "the-best-part-of-the-web" , 
                 Lock = false, 

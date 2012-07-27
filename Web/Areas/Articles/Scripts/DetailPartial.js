@@ -8,14 +8,24 @@
     function DetailPartial() {}
 
     DetailPartial.prototype.AttachLoad = function() {
-      return $('#DetailPartialTop .partialLoad').unbind('click').click(function() {
-        var dp, eleId;
-        eleId = $(this).addClass('waiting').attr('id');
-        dp = new DetailPartial;
-        return dp.Post('DetailPartial', '/Articles/DetailPartial/Post', {
-          name: 'John Doe',
+      $('#DetailPartialTop .partialLoad').unbind('click').click(function() {
+        var dp, name, nameEle, params;
+        $(this).addClass('waiting');
+        nameEle = $('#DetailPartialTop [name="name"]');
+        name = 'xsx';
+        if (nameEle.length !== 0) {
+          name = nameEle.val();
+        }
+        alert(name);
+        params = {
+          name: name,
           email: 'a@bba.com'
-        });
+        };
+        dp = new DetailPartial;
+        return dp.Post('DetailPartial', params);
+      });
+      return $('#DetailPartialTop .namecheck').unbind('click').click(function() {
+        return alert($('#DetailPartialTop [name="name"]').val);
       });
     };
 
@@ -25,17 +35,15 @@
       });
     };
 
-    DetailPartial.prototype.Post = function(eleId, pathToPost, params) {
-      return $.post(pathToPost, params, function(result) {
-        return (new DetailPartial).PostPost(result, eleId);
+    DetailPartial.prototype.Post = function(controller, params) {
+      return $.post('/Articles/' + controller + '/Post', params, function(result) {
+        return (new DetailPartial).PostPost(result, controller);
       });
     };
 
     DetailPartial.prototype.PostPost = function(results, eleId) {
-      var dp, top;
-      alert(eleId);
-      top = $('#' + eleId).closest('.partialTop');
-      top.html($(results));
+      var dp;
+      $('#' + eleId).closest('.partialTop').html($(results));
       dp = new DetailPartial;
       dp.AttachCollapser();
       return dp.AttachLoad();
