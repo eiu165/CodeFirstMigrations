@@ -35,10 +35,10 @@
     DetailPartial.prototype.AttachGet = function() {
       return $('#DetailPartialTop .partialGet').unbind('click').click(function() {
         var controller, params;
+        $(this).addClass('waiting');
         controller = 'DetailPartial';
         params = {
-          name: '',
-          email: 'a@bba.com'
+          name: ''
         };
         return $.get('/Articles/' + controller + '/Get', params, function(result) {
           return (new DetailPartial).PostPost(result, controller);
@@ -46,21 +46,22 @@
       });
     };
 
-    DetailPartial.prototype.AttachLoad = function() {
-      $('#DetailPartialTop .partialPost').unbind('click').click(function() {
-        var dp, name, params;
+    DetailPartial.prototype.AttachPost = function() {
+      return $('#DetailPartialTop .partialPost').unbind('click').click(function() {
+        var name, params, title, url;
         $(this).addClass('waiting');
         name = Partial.GetInputVal('.DetailPartial-Name');
+        title = Partial.GetInputVal('.DetailPartial-Title');
+        url = Partial.GetInputVal('.DetailPartial-Url');
         params = {
           name: name,
-          email: 'a@bba.com'
+          Title: title,
+          Url: url,
+          LockedBy: '',
+          status: '',
+          assignedTo: ''
         };
-        dp = new DetailPartial;
-        return dp.Post('DetailPartial', params);
-      });
-      return $('#DetailPartialTop .namecheck').unbind('click').click(function() {
-        var name;
-        return name = Partial.GetInputVal('.DetailPartial-Name');
+        return (new DetailPartial).Post('DetailPartial', params);
       });
     };
 
@@ -74,7 +75,7 @@
       alert(eleId);
       $('#' + eleId + 'Top').closest('.partialTop').html($(results));
       Partial.AttachCollapser('DetailPartial');
-      return (new DetailPartial).AttachLoad();
+      return (new DetailPartial).AttachPost();
     };
 
     return DetailPartial;

@@ -8,8 +8,7 @@ namespace Web.Areas.Articles.Controllers
 {
     public class DetailPartialController : Controller
     { 
-        [HttpGet]
-        public ActionResult Get(string name)
+        private DetailPartialModel GetDetailPartialModel( )
         {
             var d = new DetailPartialModel
             {
@@ -21,26 +20,29 @@ namespace Web.Areas.Articles.Controllers
                 Status = "Edit",
                 AssignedTo = "Justin"
             };
-
-            //render the new customer's listitem and return the result
-            return PartialView("DetailPartial", d);
+            return d;
         }
 
-        //[AcceptVerbs(HttpVerbs.Post)]
-        [HttpPost]
-        public ActionResult Post (string name )
+        [HttpGet]
+        public ActionResult Get(string name)
         {
-            var d = new DetailPartialModel {
-                Name = name, 
-                Title = "the best part of the web", 
-                Url = "the-best-part-of-the-web" , 
-                Lock = false, 
-                LockedBy = "Justin", 
-                Status = "Edit", 
+            var d = GetDetailPartialModel( );
+            return PartialView("DetailPartial", d);
+        }
+         
+        [HttpPost]
+        public ActionResult Post (string name , string Title, string Url, string lockedBy, string status, string assignedTo  )
+        {
+            var d = new DetailPartialModel
+            {
+                Name = name,
+                Title = Title,
+                Url = Url,
+                Lock = false,
+                LockedBy = "Justin",
+                Status = "Edit",
                 AssignedTo = "Justin"
             };
-
-            //render the new customer's listitem and return the result
             return PartialView("DetailPartial", d);
         }
 
