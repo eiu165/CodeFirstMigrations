@@ -9,24 +9,29 @@
 
     DetailPartial.prototype.AttachLoad = function() {
       return $('#DetailPartialTop .partialLoad').click(function() {
-        var eleId;
+        var dp, eleId;
         eleId = $(this).addClass('waiting').attr('id');
-        return $.post('/Articles/DetailPartial/Post', {
+        dp = new DetailPartial;
+        return dp.Post(eleId, '/Articles/DetailPartial/Post', {
           name: 'John Doe',
           email: 'a@a.com'
-        }, function(result) {
-          var dp, top;
-          top = $('#' + eleId).closest('.partialTop');
-          top.html($(result));
-          dp = new DetailPartial;
-          dp.AttachCollapser();
-          return dp.AttachLoad();
         });
       });
     };
 
-    DetailPartial.prototype.Post = function(eleIdToUpdate, pathToPost, params) {
-      return alert(aa);
+    DetailPartial.prototype.PostPost = function(results) {
+      return alert(test);
+    };
+
+    DetailPartial.prototype.Post = function(eleId, pathToPost, params) {
+      return $.post(pathToPost, params, function(result) {
+        var dp, top;
+        top = $('#' + eleId).closest('.partialTop');
+        top.html($(result));
+        dp = new DetailPartial;
+        dp.AttachCollapser();
+        return dp.AttachLoad();
+      });
     };
 
     DetailPartial.prototype.AttachCollapser = function() {
