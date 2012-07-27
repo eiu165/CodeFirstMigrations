@@ -19,18 +19,24 @@
       });
     };
 
-    DetailPartial.prototype.PostPost = function(results) {
-      return alert(test);
+    DetailPartial.prototype.PostPost = function(results, eleId) {
+      var dp, top;
+      alert('eleId: ' + eleId + '          results:' + results);
+      top = $('#' + eleId).closest('.partialTop');
+      top.html($(results));
+      dp = new DetailPartial;
+      dp.AttachCollapser();
+      return dp.AttachLoad();
     };
 
     DetailPartial.prototype.Post = function(eleId, pathToPost, params) {
-      return $.post(pathToPost, params, function(result) {
-        var dp, top;
-        top = $('#' + eleId).closest('.partialTop');
-        top.html($(result));
+      return $.post(pathToPost, {
+        name: 'John Doe',
+        email: 'a@a.com'
+      }, function(result) {
+        var dp;
         dp = new DetailPartial;
-        dp.AttachCollapser();
-        return dp.AttachLoad();
+        return dp.PostPost(result, eleId);
       });
     };
 
