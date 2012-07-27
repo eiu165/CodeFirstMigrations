@@ -24,8 +24,8 @@ namespace Core.Persistence
 
 
         private class TestDataInitializer :
-            CreateDatabaseIfNotExists<Context>
-            //DropCreateDatabaseIfModelChanges<Context>
+            //CreateDatabaseIfNotExists<Context>
+            DropCreateDatabaseIfModelChanges<Context>
             //DropCreateDatabaseAlways<Context>
         {
 
