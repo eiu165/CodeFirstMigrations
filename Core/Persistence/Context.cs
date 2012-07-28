@@ -14,7 +14,7 @@ namespace Core.Persistence
 	}
 
 
-
+    /*
     public partial class Context
     {
         static Context()
@@ -25,8 +25,9 @@ namespace Core.Persistence
 
         private class TestDataInitializer :
             //CreateDatabaseIfNotExists<Context>
-            DropCreateDatabaseIfModelChanges<Context>
+            //DropCreateDatabaseIfModelChanges<Context>
             //DropCreateDatabaseAlways<Context>
+            MigrateDatabaseToLatestVersion<Context, Configuration>
         {
 
             protected override void Seed(Context context)
@@ -38,5 +39,5 @@ namespace Core.Persistence
                 context.SaveChanges();
             }
         }
-    }
+    }*/
 }
