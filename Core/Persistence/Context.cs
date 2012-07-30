@@ -9,12 +9,12 @@ namespace Core.Persistence
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
-		}
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>()); 
+		} 
 	}
 
 
-    /*
+
     public partial class Context
     {
         static Context()
@@ -30,14 +30,14 @@ namespace Core.Persistence
             MigrateDatabaseToLatestVersion<Context, Configuration>
         {
 
-            protected override void Seed(Context context)
-            {
-                var u = new User { Name = "alpha", EmailAddress = "a@test.com" };
-                context.Users.Add(u);
-                context.Users.Add(new User { Name = "bbb", EmailAddress = "bbbb@test.com" });
-                context.Users.Add(new User { Name = "ccc", EmailAddress = "ccc@test.com" });
-                context.SaveChanges();
-            }
+            //protected override void Seed(Context context)
+            //{
+            //    var u = new User { Name = "alpha", EmailAddress = "a@test.com" };
+            //    context.Users.Add(u);
+            //    context.Users.Add(new User { Name = "bbb", EmailAddress = "bbbb@test.com" });
+            //    context.Users.Add(new User { Name = "ccc", EmailAddress = "ccc@test.com" });
+            //    context.SaveChanges();
+            //}
         }
-    }*/
+    } 
 }
