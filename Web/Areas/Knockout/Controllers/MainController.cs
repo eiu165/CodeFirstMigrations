@@ -24,6 +24,11 @@ namespace Web.Areas.Knockout.Controllers
             return View();
         }
 
+        public ActionResult Tasks2()
+        {
+            return View();
+        }
+
 
         public JsonResult GetTasks()
         {
