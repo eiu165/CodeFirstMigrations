@@ -4,8 +4,9 @@ using Core.Model;
 namespace Core.Persistence
 {
 	public partial class Context : DbContext
-	{
-		public DbSet<User> Users { get; set; }
+    {
+        public DbSet<User> Users { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
