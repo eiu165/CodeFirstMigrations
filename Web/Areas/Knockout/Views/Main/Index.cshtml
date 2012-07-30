@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+
+<!-- Folders -->
+<ul class="folders" data-bind="foreach: folders">
+    <li data-bind="text: $data,
+                   css: { selected: $data == $root.chosenFolderId() },
+                   click: $root.goToFolder"></li>
+</ul>
+
+ 
+
+
+@section Javascript
+{
+    
+    <script src="../Scripts/knockout-2.1.0.debug.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    function WebmailViewModel() {
+    // Data
+    var self = this;
+    self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    self.chosenFolderId = ko.observable();
+
+    // Behaviours    
+    self.goToFolder = function(folder) { self.chosenFolderId(folder); };    
+};
+
+    ko.applyBindings(new WebmailViewModel());
+</script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
