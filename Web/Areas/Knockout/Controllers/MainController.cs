@@ -29,11 +29,19 @@ namespace Web.Areas.Knockout.Controllers
             l.Add(new Task { title = "Wire the money to Panama", isDone = false });
             l.Add(new Task { title = "Arrange for someone to look after the cat", isDone = true });
             l.Add(new Task { title = "Get hair dye, beard trimmer, dark glasses", isDone = false });
-            l.Add(new Task { title = "Book taxi to airport", isDone = false });  
+            l.Add(new Task { title = "Book taxi to airport", isDone = false });
 
 
-            return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet) ;
+            //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
+            return Json(  l  , JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult SaveTasks(List<Task> list)
+        { 
+            return Content("the server got your stuff");
+        }
+
     }
     public class Task
     {
