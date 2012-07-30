@@ -41,15 +41,15 @@ You have <b data-bind="text: incompleteTasks().length">&nbsp;</b> incomplete tas
                 self.tasks = ko.observableArray([]);
                 self.newTaskText = ko.observable();
                 self.incompleteTasks = ko.computed(function () {
-                    return ko.utils.arrayFilter(self.tasks(), function (task) { return !task.isDone() && !task._destroy });
+                    return ko.utils.arrayFilter(self.tasks(), function (task) { return !task.isDone() && !task._destroy; });
                 });
 
                 // Operations
                 self.addTask = function () {
-                    self.tasks.push(new Task({ title: this.newTaskText() }));
+                    self.tasks.push(new Task({ title: this.newTaskText(); }));
                     self.newTaskText("");
                 };
-                self.removeTask = function (task) { self.tasks.destroy(task) };
+                self.removeTask = function (task) { self.tasks.destroy(task); };
                 self.save = function () {
                     $.ajax("/Knockout/Main/SaveTasks", {
                         data: ko.toJSON({ tasks: self.tasks }),
