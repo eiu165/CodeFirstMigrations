@@ -103,6 +103,7 @@
     <Content Include="Areas\Articles\Scripts\DetailPartial.js">
       <DependentUpon>DetailPartial.coffee</DependentUpon>
     </Content>
+    <Content Include="Areas\Knockout\Scripts\TaskPartial.js" />
     <Content Include="Content\AdminPanel.css" />
     <Content Include="Content\handheld.css" />
     <Content Include="Content\style.css" />
@@ -195,7 +196,6 @@
     <Content Include="Areas\Knockout\Views\Main\Index.cshtml" />
     <Content Include="Areas\Knockout\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Knockout\Views\Main\Tasks.cshtml" />
-    <Content Include="Areas\Knockout\Views\Main\Tasks2.cshtml" />
     <Content Include="Areas\Knockout\Views\Shared\TaskPartial.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
