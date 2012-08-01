@@ -12,6 +12,7 @@ namespace Core.Model
         public string Url { get; set; }
         public string Content { get; set; }
         public string AssignedTo { get; set; }
-        public string Status { get; set; } 
+        public string Status { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 }

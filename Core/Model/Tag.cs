@@ -7,6 +7,7 @@ namespace Core.Model
 {
     public class Tag : Entity
     {
-        public string Name { get; set; } 
+        public string Name { get; set; }
+        public ICollection<Article> Articles { get; set; }
     }
 }
