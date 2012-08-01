@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\User.cs" />

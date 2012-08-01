@@ -19,6 +19,7 @@ $(function () {
             return ko.utils.arrayFilter(self.tasks(), function (task) { return !task._destroy; });
         });
 
+
         // Operations
         self.addTask = function () {
             self.tasks.push(new Task({ title: this.newTaskText() }));
@@ -29,16 +30,20 @@ $(function () {
             $.ajax("/Knockout/Main/SaveTasks", {
                 data: ko.toJSON({ tasks: self.existingTasks }),
                 type: "post", contentType: "application/json",
-                success: function (result) { alert(result); }
+                success: function (result) { alert(result); },
+                error: function () { alert('error'); }
             });
         };
         self.cancel = function () {
             self.load();
         };
-        self.load = function() {
-            // Load initial state from server, convert it to Task instances, then populate self.tasks
-            $.getJSON("/Knockout/Main/GetTasks", function(allData) {
-                var mappedTasks = $.map(allData, function(item) { return new Task(item); });
+        self.load = function () {
+            $('#TaskPartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' }); 
+            // Load initial state from server, convert it to Task instances, then populate self.tasks 
+            $.getJSON("/Knockout/Main/GetTasks", function (allData) {
+                    $('#TaskPartial').unblock( ); 
+                    var mappedTasks = $.map(allData,function (item) {return new Task(item);}
+                );
                 self.tasks(mappedTasks);
             });
         };

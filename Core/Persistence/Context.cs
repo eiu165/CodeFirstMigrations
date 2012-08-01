@@ -7,6 +7,7 @@ namespace Core.Persistence
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
