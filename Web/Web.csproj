@@ -104,6 +104,7 @@
       <DependentUpon>DetailPartial.coffee</DependentUpon>
     </Content>
     <Content Include="Areas\Knockout\Scripts\CategoryPartial.js" />
+    <Content Include="Areas\Knockout\Scripts\TagPartial.js" />
     <Content Include="Areas\Knockout\Scripts\TaskPartial.js" />
     <Content Include="Content\AdminPanel.css" />
     <Content Include="Content\handheld.css" />

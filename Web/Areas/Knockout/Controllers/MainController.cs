@@ -95,9 +95,9 @@ namespace Web.Areas.Knockout.Controllers
 
         public ActionResult SaveCategories(CategoryList list)
         { 
-            foreach (var t in _context.Tasks)
+            foreach (var t in _context.Categories)
             {
-                _context.Tasks.Remove(t);
+                _context.Categories.Remove(t);
             } 
             foreach (var l in list.categories)
             {

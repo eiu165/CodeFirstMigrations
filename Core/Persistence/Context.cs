@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using Core.Model;
 
 namespace Core.Persistence
@@ -8,6 +9,8 @@ namespace Core.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -22,6 +25,7 @@ namespace Core.Persistence
         static Context()
         {
             Database.SetInitializer(new TestDataInitializer());
+            //Database.Initialize(false);
         }
 
 
@@ -30,7 +34,9 @@ namespace Core.Persistence
             //DropCreateDatabaseIfModelChanges<Context>
             //DropCreateDatabaseAlways<Context>
             MigrateDatabaseToLatestVersion<Context, Configuration>
+            //DbMigrationsConfiguration<Context> // http://www.remondo.net/tag/entity-framework/
         {
+
 
             //protected override void Seed(Context context)
             //{
