@@ -1,11 +1,11 @@
 ﻿
 
 
-$(function () {
+$(function () { 
     function Category(data) {
         this.name = ko.observable(data.name);
     }
-
+     
     function CategoryListViewModel() {
         // Data
         var self = this;
@@ -44,7 +44,9 @@ $(function () {
             });
         };
         self.load();
-    }
-    ko.applyBindings(new CategoryListViewModel());
+    } 
+     
+    ko.applyBindings(new CategoryListViewModel(), $('#CategoryPartial')[0]);
+
 });
 

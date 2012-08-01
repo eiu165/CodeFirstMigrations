@@ -28,6 +28,10 @@ namespace Web.Areas.Knockout.Controllers
         {
             return View();
         }
+        public ActionResult Both()
+        {
+            return View();
+        }
 
 
         private readonly Context _context = new Context();
@@ -53,15 +57,15 @@ namespace Web.Areas.Knockout.Controllers
         }
 
 
-        public ActionResult SaveTasks(Tasks list)
+        public ActionResult SaveTasks(TaskList list)
         {
+            Thread.Sleep(1000); 
             var numberTasks = 0;
             var numberDone = 0;
             foreach (var t in _context.Tasks)
             {
                 _context.Tasks.Remove(t);
-            }
-
+            } 
             foreach (var l in list.tasks)
             {
                 _context.Tasks.Add(new Task { IsDone = l.isDone, Title = l.title });
@@ -70,10 +74,8 @@ namespace Web.Areas.Knockout.Controllers
                 {
                     numberDone++;
                 }
-            }
-
-            _context.SaveChanges();
-
+            } 
+            _context.SaveChanges(); 
             return Content(string.Format("the server got {0} tasks, {1} of which are done ", numberTasks, numberDone ));
         }
 
@@ -109,7 +111,7 @@ namespace Web.Areas.Knockout.Controllers
 
 
     }
-    public class Tasks
+    public class TaskList
     {
         public TaskViewModel[] tasks { get; set; }
     }
