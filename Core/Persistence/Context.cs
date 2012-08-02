@@ -14,11 +14,14 @@ namespace Core.Persistence
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>()); 
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>()); 
 		} 
 	}
 
 
+
+
+    /*
 
     public partial class Context
     {
@@ -47,5 +50,5 @@ namespace Core.Persistence
             //    context.SaveChanges();
             //}
         }
-    } 
+    } */
 }
