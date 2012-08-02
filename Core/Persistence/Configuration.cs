@@ -17,12 +17,12 @@ namespace Core.Persistence
             var articles = new List<Article>();
             for (int i = 0; i < 10; i++)
             {
-                articles.Add(new Article { Name = "test " + i, AssignedTo = "Tom", Url = "test-" + i, Content = "lourm ipsum", Title = "Test " + i });
+                articles.Add(new Article { Name = "test " + i,  Content = "lourm ipsum"  });
             }
             var tags = new List<Tag>();
             for (int i = 0; i < 10; i++)
             {
-                tags.Add(new Tag { Name = "tag " + i , Articles = new List<Article>{ new Article{ Title= "asdfas" , Url = "aaaaaaaaa"}}});
+                tags.Add(new Tag { Name = "tag " + i , Articles = new  Article[]{ articles[0] }});
             }
             context.Articles.AddOrUpdate(x => x.Name, articles.ToArray());
             context.Tags.AddOrUpdate(x => x.Name, tags.ToArray());
