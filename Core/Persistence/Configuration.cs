@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity.Migrations;
 using Core.Model;
+using System.Collections.Generic;
 
 namespace Core.Persistence
 {
@@ -13,14 +14,18 @@ namespace Core.Persistence
 
         protected override void Seed(Context context)
         {
-
-            context.Articles.AddOrUpdate(
-              x => x.Name,
-              new Article { Name = "test 1" },
-              new Article { Name = "test 2" },
-              new Article { Name = "test 3" },
-              new Article { Name = "test 4" }
-            );
+            var articles = new List<Article>();
+            for (int i = 0; i < 10; i++)
+            {
+                articles.Add(new Article { Name = "test " + i, AssignedTo = "Tom", Url = "test-" + i, Content = "lourm ipsum", Title = "Test " + i });
+            }
+            var tags = new List<Tag>();
+            for (int i = 0; i < 10; i++)
+            {
+                tags.Add(new Tag { Name = "tag " + i , Articles = new List<Article>{ new Article{ Title= "asdfas" , Url = "aaaaaaaaa"}}});
+            }
+            context.Articles.AddOrUpdate(x => x.Name, articles.ToArray());
+            context.Tags.AddOrUpdate(x => x.Name, tags.ToArray());
         }
     }
 }
