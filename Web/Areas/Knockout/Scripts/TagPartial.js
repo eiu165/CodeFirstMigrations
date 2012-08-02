@@ -45,10 +45,7 @@ $(function () {
             });
         };
         self.configureTagAutocomplete = function () {
-            var availableTags = _.map(self.tags(), function (item) { return (item.name._latestValue); });  //self.tags; //[@Html.Raw(@ViewBag.AvailableTags)] 
-
-            console.log('self.tags() length: ' + self.tags().length);
-            console.log('availableTags length: ' + availableTags.length); 
+            var availableTags = $.map(self.tags(), function (item) { return (item.name._latestValue); }); 
             $("#txtTag").autocomplete({
                 source: availableTags
             });

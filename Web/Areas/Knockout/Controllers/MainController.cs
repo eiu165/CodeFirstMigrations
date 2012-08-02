@@ -117,10 +117,16 @@ namespace Web.Areas.Knockout.Controllers
         public JsonResult GetTags()
         {
             Thread.Sleep(1000);
-            var l = _context.Tags.Select(x => new TagViewModel
-            {
-                name = x.Name
-            });
+            var articleId = 1;
+            var allTags = _context.Tags.Select(x=> x.Name).Distinct();
+            var articleTags = _context.Tags.Where(x => x.Articles.Any(y => y.Id == articleId));
+             
+            var l = allTags.Select(x => new TagViewModel
+                                            {
+                                                name = x,
+                                                isInArticle = articleTags.Any(y => y.Id == articleId)
+                                            });
+
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
         } 
@@ -150,8 +156,9 @@ namespace Web.Areas.Knockout.Controllers
     }
     public class TagViewModel
     {
+        public int articleId { get; set; }
         public string name { get; set; }
-        public bool isDone { get; set; }
+        public bool isInArticle { get; set; }
     }
     public class TaskList
     {
