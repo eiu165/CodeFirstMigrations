@@ -7,8 +7,9 @@
     </form>
 
     <ul data-bind="foreach: tags, visible: tags().length > 0">
-        <li> 
-            <input data-bind="value: name " />
+        <li>  
+            <div data-bind="value: name"></div>   
+              <label data-bind="text: name " ></label> 
             <a href="#" data-bind="click: $parent.removeTag">Delete</a>
         </li>
     </ul>

@@ -39,19 +39,21 @@ $(function () {
             // Load initial state from server, convert it to Tag instances, then populate self.tags 
             $.getJSON("/Knockout/Main/GetTags", function (allData) {
                 $('#TagPartial').unblock();
-                var mappedtags = $.map(allData, function (item) { return new Tag(item); }
-                );
+                var mappedtags = $.map(allData, function (item) { return new Tag(item); });
                 self.tags(mappedtags);
+                self.configureTagAutocomplete();
             });
         };
         self.configureTagAutocomplete = function () {
-            var availableTags = ['abc', 'def', 'hij', 'klm', 'nop']; //[@Html.Raw(@ViewBag.AvailableTags)] 
+            var availableTags = _.map(self.tags(), function (item) { return (item.name._latestValue); });  //self.tags; //[@Html.Raw(@ViewBag.AvailableTags)] 
+
+            console.log('self.tags() length: ' + self.tags().length);
+            console.log('availableTags length: ' + availableTags.length); 
             $("#txtTag").autocomplete({
                 source: availableTags
             });
         };
         self.load();
-        self.configureTagAutocomplete();
     }
 
     ko.applyBindings(new TagListViewModel(), $('#TagPartial')[0]);
