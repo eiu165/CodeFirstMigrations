@@ -126,12 +126,21 @@ namespace Web.Areas.Knockout.Controllers
             //                                    isInArticle = article.Tags.Any(y => y.Name == x)
             //                                }); 
             //var l = _context.Tags.Where(x => x.Articles.Any(y => y.Id == articleId));
-            var l = _context.Tags.Select(x => new TagViewModel
-            {
-                articleId = x.Id,
-                name = x.Name,
-                isInArticle = _context.Tags.Any(z => z.Articles.Any(y => y.Id == articleId))
-            });
+
+            //var l = _context.Tags.Select(x => new TagViewModel
+            //{
+            //    articleId = x.Id,
+            //    name = x.Name,
+            //    isInArticle = _context.Tags.Any(z => z.Articles.Any(y => y.Id == articleId))
+            //});
+
+
+            var l = from at in _context.ArticleTags
+                    join a in _context.Articles on at.Article.Id equals a.Id
+                    join t in _context.Tags on at.Article.Id equals t.Id
+                    select new { at.Id, ArticleName = a.Name, TagName = t.Name };
+
+
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
         } 

@@ -22,10 +22,16 @@ namespace Core.Persistence
             var tags = new List<Tag>();
             for (int i = 0; i < 10; i++)
             {
-                tags.Add(new Tag { Name = "tag " + i , Articles = new  Article[]{ articles[0] }});
+                tags.Add(new Tag { Name = "tag " + i });
+            }
+            var articleTag = new List<ArticleTag>();
+            for (int i = 0; i < 10; i++)
+            {
+                articleTag.Add(new ArticleTag { Name="articleTag"+ i, Article = articles[i], Tag = tags[i] });
             }
             context.Articles.AddOrUpdate(x => x.Name, articles.ToArray());
             context.Tags.AddOrUpdate(x => x.Name, tags.ToArray());
+            context.ArticleTags.AddOrUpdate(x => x.Name, articleTag.ToArray());
         }
     }
 }
