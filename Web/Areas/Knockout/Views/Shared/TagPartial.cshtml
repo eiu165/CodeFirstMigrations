@@ -6,7 +6,7 @@
         <button type="submit">Add</button>
     </form>
 
-    <ul data-bind="foreach: tags, visible: tags().length > 0">
+    <ul data-bind="foreach: articleTags, visible: articleTags.length > 0">
         <li>  
             <div data-bind="value: name"></div>   
               <label data-bind="text: name " ></label> 

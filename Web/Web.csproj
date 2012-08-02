@@ -72,6 +72,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Infastructure\Massive.cs" />
+    <Compile Include="App\Models\Article.cs" />
     <Compile Include="Areas\Articles\ArticlesAreaRegistration.cs" />
     <Compile Include="Areas\Articles\Controllers\CategoryPartialController.cs" />
     <Compile Include="Areas\Articles\Controllers\DetailPartialController.cs" />

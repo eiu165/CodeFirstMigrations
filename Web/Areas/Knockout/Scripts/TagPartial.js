@@ -15,6 +15,9 @@ $(function () {
         self.existingtags = ko.computed(function () {
             return ko.utils.arrayFilter(self.tags(), function (tag) { return !tag._destroy; });
         });
+        self.articleTags = ko.computed(function () {
+            return ko.utils.arrayFilter(self.tags(), function (tag) { return tag.isInArticle; });
+        });
 
 
         // Operations
@@ -45,7 +48,7 @@ $(function () {
             });
         };
         self.configureTagAutocomplete = function () {
-            var availableTags = $.map(self.tags(), function (item) { return (item.name._latestValue); }); 
+            var availableTags = $.map(self.tags(), function (item) { return (item.name._latestValue); });
             $("#txtTag").autocomplete({
                 source: availableTags
             });

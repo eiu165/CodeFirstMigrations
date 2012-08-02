@@ -117,16 +117,21 @@ namespace Web.Areas.Knockout.Controllers
         public JsonResult GetTags()
         {
             Thread.Sleep(1000);
-            var articleId = 1;
-            var allTags = _context.Tags.Select(x=> x.Name).Distinct();
-            var articleTags = _context.Tags.Where(x => x.Articles.Any(y => y.Id == articleId));
-             
-            var l = allTags.Select(x => new TagViewModel
-                                            {
-                                                name = x,
-                                                isInArticle = articleTags.Any(y => y.Id == articleId)
-                                            });
-
+            var articleId = 2;
+            //var allTags = _context.Tags.Select(x=> x.Name).Distinct();
+            //var article = _context.Articles.Where(z => z.Id == articleId).SingleOrDefault();
+            //var l = allTags.Select(x => new TagViewModel
+            //                                {
+            //                                    name = x,
+            //                                    isInArticle = article.Tags.Any(y => y.Name == x)
+            //                                }); 
+            //var l = _context.Tags.Where(x => x.Articles.Any(y => y.Id == articleId));
+            var l = _context.Tags.Select(x => new TagViewModel
+            {
+                articleId = x.Id,
+                name = x.Name,
+                isInArticle = _context.Tags.Any(z => z.Articles.Any(y => y.Id == articleId))
+            });
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
         } 
@@ -143,12 +148,7 @@ namespace Web.Areas.Knockout.Controllers
             }
             _context.SaveChanges();
             return Content(string.Format("the server got the categories "));
-        }
-
-
-
-
-
+        } 
     }
     public class TagList
     {
