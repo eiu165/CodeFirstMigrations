@@ -23,6 +23,11 @@ namespace Web.Areas.Knockout.Controllers
             return View();
         }
 
+        public ActionResult Tags()
+        {
+            return View();
+        }
+
 
         public ActionResult Categories()
         {
@@ -109,7 +114,44 @@ namespace Web.Areas.Knockout.Controllers
 
 
 
+        public JsonResult GetTags()
+        {
+            Thread.Sleep(1000);
+            var l = _context.Tags.Select(x => new TagViewModel
+            {
+                name = x.Name
+            });
+            //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
+            return Json(l, JsonRequestBehavior.AllowGet);
+        } 
 
+        public ActionResult SaveTags(TagList list)
+        {
+            foreach (var t in _context.Tags)
+            {
+                _context.Tags.Remove(t);
+            }
+            foreach (var l in list.tags)
+            {
+                _context.Tags.Add(new Tag  { Name = l.name });
+            }
+            _context.SaveChanges();
+            return Content(string.Format("the server got the categories "));
+        }
+
+
+
+
+
+    }
+    public class TagList
+    {
+        public TagViewModel[] tags { get; set; }
+    }
+    public class TagViewModel
+    {
+        public string name { get; set; }
+        public bool isDone { get; set; }
     }
     public class TaskList
     {

@@ -6,7 +6,7 @@ $(function () {
         this.name = ko.observable(data.name);
         this.isInArticle = ko.observable(data.isInArticle);
     }
-     
+
     function TagListViewModel() {
         // Data
         var self = this;
@@ -37,16 +37,23 @@ $(function () {
         self.load = function () {
             $('#TagPartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' });
             // Load initial state from server, convert it to Tag instances, then populate self.tags 
-            $.getJSON("/Knockout/Main/GetTags", function (allData) { 
-                    $('#TagPartial').unblock(); 
-                    var mappedtags = $.map(allData,function (item) {return new Tag(item);}
+            $.getJSON("/Knockout/Main/GetTags", function (allData) {
+                $('#TagPartial').unblock();
+                var mappedtags = $.map(allData, function (item) { return new Tag(item); }
                 );
                 self.tags(mappedtags);
             });
         };
+        self.configureTagAutocomplete = function () {
+            var availableTags = ['abc', 'def', 'hij', 'klm', 'nop']; //[@Html.Raw(@ViewBag.AvailableTags)] 
+            $("#txtTag").autocomplete({
+                source: availableTags
+            });
+        };
         self.load();
-    } 
-     
+        self.configureTagAutocomplete();
+    }
+
     ko.applyBindings(new TagListViewModel(), $('#TagPartial')[0]);
 
 });
