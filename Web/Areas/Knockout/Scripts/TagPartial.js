@@ -3,8 +3,7 @@
 
 $(function () {
     function Tag(data) {
-        this.tagId = ko.observable(data.tagId);
-        this.articleId = ko.observable(data.articleId);
+        this.tagId = ko.observable(data.tagId); 
         this.name = ko.observable(data.name);
         this.isInArticle = ko.observable(data.isInArticle);
     }
@@ -15,22 +14,31 @@ $(function () {
         self.tags = ko.observableArray([]);
         self.newTagText = ko.observable();
         self.existingtags = ko.computed(function () {
-            return ko.utils.arrayFilter(self.tags(), function (tag) { return !tag._destroy; });
-        });
-        self.articleTags = ko.computed(function () {
-            return ko.utils.arrayFilter(self.tags(), function (tag) { return tag.isInArticle() ; });
+            return ko.utils.arrayFilter(self.tags(), function (tag) { return tag.isInArticle() && !tag._destroy; });
         });
 
 
         // Operations
         self.addTag = function () {
-            self.tags.push(new Tag({ name: this.newTagText() }));
+            self.newTagText($("#TagPartial #txtTag").val());
+            var newTag = new Tag({ name: self.newTagText(), isInArticle: true });
+            self.tags.push(newTag);
             self.newTagText("");
+            self.save(newTag);
         };
-        self.removeTag = function (tag) { self.tags.destroy(tag); };
-        self.save = function () {
-            $.ajax("/Knockout/Main/SaveTags", {
-                data: ko.toJSON({ tags: self.existingtags }),
+        self.removeTag = function (tag) {
+            self.tags.destroy(tag);
+            $.ajax("/Knockout/Main/RemoveTag", {
+                data: ko.toJSON({ tag: tag }),
+                type: "post", contentType: "application/json",
+                success: function (result) { alert(result); },
+                error: function () { alert('error'); }
+            });
+
+        };
+        self.save = function (newTag) { 
+            $.ajax("/Knockout/Main/SaveTag", {
+                data: ko.toJSON({ tag: newTag }),
                 type: "post", contentType: "application/json",
                 success: function (result) { alert(result); },
                 error: function () { alert('error'); }
@@ -51,7 +59,7 @@ $(function () {
         };
         self.configureTagAutocomplete = function () {
             var availableTags = $.map(self.tags(), function (item) { return (item.name._latestValue); });
-            $("#txtTag").autocomplete({
+            $("#TagPartial #txtTag").autocomplete({
                 source: availableTags
             });
         };

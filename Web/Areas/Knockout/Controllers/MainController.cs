@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Core.Model;
 using Core.Persistence;
+using System.Transactions;
 
 namespace Web.Areas.Knockout.Controllers
 {
@@ -112,12 +113,24 @@ namespace Web.Areas.Knockout.Controllers
             return Content(string.Format("the server got the categories "));
         }
 
+        private int? _articleId = null;
+        private int? articleId
+        {
+            get
+            {
+                if (_articleId != null)
+                {
+                    return _articleId;
+                }
+                _articleId = _context.Articles.FirstOrDefault().Id;
+                return _articleId;
+            }
+        }
 
 
         public JsonResult GetTags()
         {
-            Thread.Sleep(1000);
-            var articleId = 21;
+            Thread.Sleep(1000); 
             //var allTags = _context.Tags.Select(x=> x.Name).Distinct();
             //var article = _context.Articles.Where(z => z.Id == articleId).SingleOrDefault();
             //var l = allTags.Select(x => new TagViewModel
@@ -154,36 +167,86 @@ namespace Web.Areas.Knockout.Controllers
                              isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Tag.Id == t.Id && x.Article.Id == 21).Count()) > 0
                          });
             */
-
+            //var at = _context.ArticleTags.Where(x =>   x.Article.Id == articleId).ToList();
             var l = (from t in _context.Tags
-                     group t by new { t.Id, t.Name }
-                         into grp
+                     group t by new { t.Id, t.Name } into grp
                          select new TagViewModel
                          {
                              tagId = grp.Key.Id,
                              name = grp.Key.Name,
-                             articleId = articleId,
+                             //articleId = articleId ?? 0,
                              //ArticleName = _context.Articles.Where(x => x.Id == articleId).SingleOrDefault().Name,
-                             isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Tag.Id == t.Id && x.Article.Id == articleId).Count()) > 0
+                             //isInArticle = grp.Sum(t => at.Where(x => x.Tag.Id == t.Id).Count()) > 0
+                             isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Article.Id == articleId).Where(x => x.Tag.Id == t.Id).Count()) > 0
                          });
 
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+         
+        public ActionResult SaveTag(TagViewModel tag)
+        { 
+            var article = _context.Articles.Find(articleId);
+            var r = string.Format("article was tagged with {0}", tag.name);
+            var dbTag = _context.Tags.Where(x => x.Name == tag.name).FirstOrDefault();
+            if (dbTag == null)
+            {
+                dbTag = _context.Tags.Add(new Tag { Name = tag.name });
+                r = string.Format("'{0}' was added to the db and article was tagged with '{0}'", tag.name);
+            }
+            _context.ArticleTags.Add(new ArticleTag {Article = article, Tag = dbTag});
+            _context.SaveChanges();
+            return Content(r);
+        }
+        public ActionResult RemoveTag(TagViewModel tag)
+        {
+            foreach (var at in _context.ArticleTags.Where(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
+            {
+                _context.ArticleTags.Remove(at);
+            }
+            string r = string.Format("removed '{0}' from article", tag.name);
+            if (!_context.ArticleTags.Any(x => x.Tag.Name == tag.name))
+            {
+                foreach (var t in _context.Tags.Where(x => x.Name == tag.name))
+                {
+                    _context.Tags.Remove(t);
+                    r = string.Format("removed tag '{0}' from article and tag", tag.name);
+                }
+            } 
+            return Content(r);
         } 
 
+        /*
         public ActionResult SaveTags(TagList list)
         {
-            foreach (var t in _context.Tags)
+            using (var ctx = new Context())
             {
-                _context.Tags.Remove(t);
+                using (var scope = new TransactionScope())
+                { 
+                    var article = ctx.Articles.Find(articleId);
+                    //ctx.ArticleTags.Where(x => x.Article.Id == articleId).ToList().ForEach(x => ctx.ArticleTags.DeleteObject(x));
+                    ctx.Database.ExecuteSqlCommand("Delete from ArticleTags where Article_Id = {0}", articleId);
+
+                    var tags = ctx.Tags;
+                    foreach (TagViewModel t in list.tags)
+                    {
+                        var tag = tags.Where(x => x.Name == t.name).FirstOrDefault();
+                        if (tag == null)
+                        {
+                            tag = ctx.Tags.Add(new Tag {Name = t.name});
+                        }
+                        ctx.ArticleTags.Add(new ArticleTag {Article = article, Tag = tag});
+                    }
+                    ctx.SaveChanges();
+                    scope.Complete();
+                }
             }
-            foreach (var l in list.tags)
-            {
-                _context.Tags.Add(new Tag  { Name = l.name });
-            }
-            _context.SaveChanges();
-            return Content(string.Format("the server got the categories "));
-        } 
+
+            return Content(string.Format("the server got the tags "));
+        } */
     }
     public class TagList
     {
@@ -191,8 +254,7 @@ namespace Web.Areas.Knockout.Controllers
     }
     public class TagViewModel
     {
-        public int tagId { get; set; }
-        public int articleId { get; set; }
+        public int tagId { get; set; } 
         public string name { get; set; }
         public bool isInArticle { get; set; }
     }
