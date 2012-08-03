@@ -35,7 +35,6 @@ class DetailPartial
 		(result) ->  
 			(new DetailPartial).PostPost(result, controller))  
 	PostPost: (results, eleId) ->  
-		alert eleId
 		$('#'+eleId+'Top').closest('.partialTop').html($(results))  
 		Partial.AttachCollapser('DetailPartial')
 		(new DetailPartial).AttachPost() 

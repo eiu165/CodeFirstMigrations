@@ -117,7 +117,7 @@ namespace Web.Areas.Knockout.Controllers
         public JsonResult GetTags()
         {
             Thread.Sleep(1000);
-            var articleId = 2;
+            var articleId = 21;
             //var allTags = _context.Tags.Select(x=> x.Name).Distinct();
             //var article = _context.Articles.Where(z => z.Id == articleId).SingleOrDefault();
             //var l = allTags.Select(x => new TagViewModel
@@ -134,11 +134,24 @@ namespace Web.Areas.Knockout.Controllers
             //    isInArticle = _context.Tags.Any(z => z.Articles.Any(y => y.Id == articleId))
             //});
 
-
+            /*
             var l = from at in _context.ArticleTags
                     join a in _context.Articles on at.Article.Id equals a.Id
                     join t in _context.Tags on at.Article.Id equals t.Id
                     select new { at.Id, ArticleName = a.Name, TagName = t.Name };
+            */
+
+            var l = (from t in _context.Tags
+                     group t by new { t.Id, t.Name }
+                         into grp
+                         select new
+                         {
+                             grp.Key.Id,
+                             //articleId = 
+                             name = grp.Key.Name,
+                             //AllArt = grp.Sum(t => ArticleTags.Where(x=> x.Tag_Id == t.Id).Count() ),
+                             isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Tag.Id == t.Id && x.Article.Id == 21).Count()) > 0
+                         });
 
 
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);

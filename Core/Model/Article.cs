@@ -9,7 +9,7 @@ namespace Core.Model
 {
     public class Article : Entity
     {  
-        [StringLength(150)]
+        [StringLength(50)]
         public string Name { get; set; }
         [StringLength(150)] 
         public string Url { get; set; }

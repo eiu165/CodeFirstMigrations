@@ -72,7 +72,6 @@
     };
 
     DetailPartial.prototype.PostPost = function(results, eleId) {
-      alert(eleId);
       $('#' + eleId + 'Top').closest('.partialTop').html($(results));
       Partial.AttachCollapser('DetailPartial');
       return (new DetailPartial).AttachPost();
