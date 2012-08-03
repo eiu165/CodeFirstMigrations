@@ -5,14 +5,14 @@
         Add Tag: <input id="txtTag" data-bind="value: newTagText" placeholder="what tag do you want?" />
         <button type="submit">Add</button>
     </form>
-
-    <ul data-bind="foreach: articleTags, visible: articleTags.length > 0">
-        <li>  
-            <div data-bind="value: name"></div>   
-              <label data-bind="text: name " ></label> 
+     
+    <ul data-bind="foreach: articleTags(), visible: articleTags().length > 0">
+        <li>   
+            <label data-bind="text: name " ></label>     
             <a href="#" data-bind="click: $parent.removeTag">Delete</a>
         </li>
     </ul>
+
      
 
     <button data-bind="click: save">Save</button>

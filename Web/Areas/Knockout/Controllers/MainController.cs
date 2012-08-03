@@ -141,6 +141,7 @@ namespace Web.Areas.Knockout.Controllers
                     select new { at.Id, ArticleName = a.Name, TagName = t.Name };
             */
 
+            /*
             var l = (from t in _context.Tags
                      group t by new { t.Id, t.Name }
                          into grp
@@ -152,7 +153,19 @@ namespace Web.Areas.Knockout.Controllers
                              //AllArt = grp.Sum(t => ArticleTags.Where(x=> x.Tag_Id == t.Id).Count() ),
                              isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Tag.Id == t.Id && x.Article.Id == 21).Count()) > 0
                          });
+            */
 
+            var l = (from t in _context.Tags
+                     group t by new { t.Id, t.Name }
+                         into grp
+                         select new TagViewModel
+                         {
+                             tagId = grp.Key.Id,
+                             name = grp.Key.Name,
+                             articleId = articleId,
+                             //ArticleName = _context.Articles.Where(x => x.Id == articleId).SingleOrDefault().Name,
+                             isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Tag.Id == t.Id && x.Article.Id == articleId).Count()) > 0
+                         });
 
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
@@ -178,6 +191,7 @@ namespace Web.Areas.Knockout.Controllers
     }
     public class TagViewModel
     {
+        public int tagId { get; set; }
         public int articleId { get; set; }
         public string name { get; set; }
         public bool isInArticle { get; set; }

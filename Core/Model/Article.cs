@@ -11,7 +11,7 @@ namespace Core.Model
     {  
         [StringLength(50)]
         public string Name { get; set; }
-        [StringLength(150)] 
+        [StringLength(100)] 
         public string Url { get; set; }
         public string Content { get; set; }
         [StringLength(150)]

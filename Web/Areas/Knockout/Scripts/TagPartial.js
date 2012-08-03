@@ -3,6 +3,8 @@
 
 $(function () {
     function Tag(data) {
+        this.tagId = ko.observable(data.tagId);
+        this.articleId = ko.observable(data.articleId);
         this.name = ko.observable(data.name);
         this.isInArticle = ko.observable(data.isInArticle);
     }
@@ -16,7 +18,7 @@ $(function () {
             return ko.utils.arrayFilter(self.tags(), function (tag) { return !tag._destroy; });
         });
         self.articleTags = ko.computed(function () {
-            return ko.utils.arrayFilter(self.tags(), function (tag) { return tag.isInArticle; });
+            return ko.utils.arrayFilter(self.tags(), function (tag) { return tag.isInArticle() ; });
         });
 
 
