@@ -20,10 +20,10 @@ namespace Core.Persistence
                 articles.Add(new Article { Name = "test " + i,  Content = "lourm ipsum"  });
             }
             var tags = new List<Tag>();
-            for (int i = 0; i < 4; i++)
-            {
-                tags.Add(new Tag { Name = "tag " + i });
-            }
+            tags.Add(new Tag { Name = "Personal" });
+            tags.Add(new Tag { Name = "Auto" });
+            tags.Add(new Tag { Name = "Family" }); 
+            tags.Add(new Tag { Name = "Home" }); 
             var articleTag = new List<ArticleTag>();
             for (int i = 0; i < 4; i++)
             {
