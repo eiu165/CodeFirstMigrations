@@ -130,67 +130,32 @@ namespace Web.Areas.Knockout.Controllers
 
         public JsonResult GetTags()
         {
-            Thread.Sleep(1000); 
-            //var allTags = _context.Tags.Select(x=> x.Name).Distinct();
-            //var article = _context.Articles.Where(z => z.Id == articleId).SingleOrDefault();
-            //var l = allTags.Select(x => new TagViewModel
-            //                                {
-            //                                    name = x,
-            //                                    isInArticle = article.Tags.Any(y => y.Name == x)
-            //                                }); 
-            //var l = _context.Tags.Where(x => x.Articles.Any(y => y.Id == articleId));
-
-            //var l = _context.Tags.Select(x => new TagViewModel
-            //{
-            //    articleId = x.Id,
-            //    name = x.Name,
-            //    isInArticle = _context.Tags.Any(z => z.Articles.Any(y => y.Id == articleId))
-            //});
-
-            /*
-            var l = from at in _context.ArticleTags
-                    join a in _context.Articles on at.Article.Id equals a.Id
-                    join t in _context.Tags on at.Article.Id equals t.Id
-                    select new { at.Id, ArticleName = a.Name, TagName = t.Name };
-            */
-
-            /*
-            var l = (from t in _context.Tags
-                     group t by new { t.Id, t.Name }
-                         into grp
-                         select new
-                         {
-                             grp.Key.Id,
-                             //articleId = 
-                             name = grp.Key.Name,
-                             //AllArt = grp.Sum(t => ArticleTags.Where(x=> x.Tag_Id == t.Id).Count() ),
-                             isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Tag.Id == t.Id && x.Article.Id == 21).Count()) > 0
-                         });
-            */
-            //var at = _context.ArticleTags.Where(x =>   x.Article.Id == articleId).ToList();
-            var l = (from t in _context.Tags
-                     group t by new { t.Id, t.Name } into grp
-                         select new TagViewModel
-                         {
-                             tagId = grp.Key.Id,
-                             name = grp.Key.Name,
-                             //articleId = articleId ?? 0,
-                             //ArticleName = _context.Articles.Where(x => x.Id == articleId).SingleOrDefault().Name,
-                             //isInArticle = grp.Sum(t => at.Where(x => x.Tag.Id == t.Id).Count()) > 0
-                             isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Article.Id == articleId).Where(x => x.Tag.Id == t.Id).Count()) > 0
-                         });
+            Thread.Sleep(1000);
+            var l = GetTagsFromDb();
 
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
         }
 
+        private IQueryable<TagViewModel> GetTagsFromDb()
+        {
+            var l = (from t in _context.Tags
+                     group t by new { t.Id, t.Name } into grp
+                     select new TagViewModel
+                     {
+                         tagId = grp.Key.Id,
+                         name = grp.Key.Name,
+                         isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Article.Id == articleId).Where(x => x.Tag.Id == t.Id).Count()) > 0
+                     });
+            return l;
+        }
+
 
 
          
-        public ActionResult SaveTag(TagViewModel tag)
+        public JsonResult SaveTag(TagViewModel tag)
         {
-            Thread.Sleep(1000);
-            var r = string.Format(" " );
+            Thread.Sleep(1000); 
             using (var context = new Context())
             {
                 var article = context.Articles.Find(articleId);
@@ -198,16 +163,15 @@ namespace Web.Areas.Knockout.Controllers
                 if (dbTag == null)
                 {
                     dbTag = context.Tags.Add(new Tag { Name = tag.name });
-                    r = string.Format("'{0}' was added to the db : ", tag.name);
                 } 
                 if (!context.ArticleTags.Any(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
                 {
                     context.ArticleTags.Add(new ArticleTag { Article = article, Tag = dbTag });
-                    r += string.Format("added tag '{0}' ", tag.name); 
                 }
                 context.SaveChanges();
             }
-            return Content(r);
+
+            return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
         }
         public ActionResult RemoveTag(TagViewModel tag)
         {

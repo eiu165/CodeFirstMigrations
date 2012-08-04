@@ -20,7 +20,7 @@ $(function () {
         self.addTag = function () { 
             self.newTagText($("#TagPartial #txtTag").val());
             var newTag = new Tag({ name: self.newTagText(), isInArticle: true });
-            self.tags.push(newTag);
+            //self.tags.push(newTag);
             self.newTagText("");
             self.save(newTag);
         };
@@ -43,11 +43,13 @@ $(function () {
             $.ajax("/Knockout/Main/SaveTag", {
                 data: ko.toJSON({ tag: newTag }),
                 type: "post", contentType: "application/json",
-                success: function (result) { alert(result); },
+                success: function (allData) {
+                    var mappedtags = $.map(allData, function (item) { return new Tag(item); });
+                    self.tags(mappedtags);
+                    self.configureTagAutocomplete();
+                },
                 error: function () { alert('error'); },
-                complete: function () {
-                    $('#TagPartial').unblock();
-                }
+                complete: function () { $('#TagPartial').unblock();}
             });
         };
         self.cancel = function () {
