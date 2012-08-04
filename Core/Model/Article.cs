@@ -11,10 +11,10 @@ namespace Core.Model
     {  
         [StringLength(50)]
         public string Name { get; set; }
-        [StringLength(120)] 
+        [StringLength(100)] 
         public string Url { get; set; }
         public string Content { get; set; }
-        [StringLength(110)]
+        [StringLength(100)]
         public string AssignedTo { get; set; }
         [StringLength(100)]  
         public string Status { get; set; }

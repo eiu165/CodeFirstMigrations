@@ -14,8 +14,9 @@ namespace Core.Persistence
         public DbSet<ArticleTag> ArticleTags { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>()); 
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
+//           Database.SetInitializer(new DropCreateDatabaseAlways<Context>()); 
 		} 
 	}
 
