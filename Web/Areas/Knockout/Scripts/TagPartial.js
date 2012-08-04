@@ -3,7 +3,7 @@
 
 $(function () {
     function Tag(data) {
-        this.tagId = ko.observable(data.tagId); 
+        this.tagId = ko.observable(data.tagId);
         this.name = ko.observable(data.name);
         this.isInArticle = ko.observable(data.isInArticle);
     }
@@ -20,6 +20,7 @@ $(function () {
 
         // Operations
         self.addTag = function () {
+
             self.newTagText($("#TagPartial #txtTag").val());
             var newTag = new Tag({ name: self.newTagText(), isInArticle: true });
             self.tags.push(newTag);
@@ -27,21 +28,29 @@ $(function () {
             self.save(newTag);
         };
         self.removeTag = function (tag) {
+            $('#TagPartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' });
             self.tags.destroy(tag);
             $.ajax("/Knockout/Main/RemoveTag", {
                 data: ko.toJSON({ tag: tag }),
                 type: "post", contentType: "application/json",
                 success: function (result) { alert(result); },
-                error: function () { alert('error'); }
+                error: function () { alert('error'); },
+                complete: function () {
+                    $('#TagPartial').unblock();
+                }
             });
 
         };
-        self.save = function (newTag) { 
+        self.save = function (newTag) {
+            $('#TagPartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' });
             $.ajax("/Knockout/Main/SaveTag", {
                 data: ko.toJSON({ tag: newTag }),
                 type: "post", contentType: "application/json",
                 success: function (result) { alert(result); },
-                error: function () { alert('error'); }
+                error: function () { alert('error'); },
+                complete: function () {
+                    $('#TagPartial').unblock();
+                }
             });
         };
         self.cancel = function () {

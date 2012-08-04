@@ -188,7 +188,8 @@ namespace Web.Areas.Knockout.Controllers
 
          
         public ActionResult SaveTag(TagViewModel tag)
-        { 
+        {
+            Thread.Sleep(1000); 
             var article = _context.Articles.Find(articleId);
             var r = string.Format("article was tagged with {0}", tag.name);
             var dbTag = _context.Tags.Where(x => x.Name == tag.name).FirstOrDefault();
@@ -203,6 +204,7 @@ namespace Web.Areas.Knockout.Controllers
         }
         public ActionResult RemoveTag(TagViewModel tag)
         {
+            Thread.Sleep(1000); 
             foreach (var at in _context.ArticleTags.Where(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
             {
                 _context.ArticleTags.Remove(at);

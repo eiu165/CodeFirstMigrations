@@ -18,6 +18,6 @@ namespace Core.Model
         public string AssignedTo { get; set; }
         [StringLength(100)]  
         public string Status { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+
     }
 }
