@@ -30,7 +30,11 @@ $(function () {
             $.ajax("/Knockout/Main/RemoveTag", {
                 data: ko.toJSON({ tag: tag }),
                 type: "post", contentType: "application/json",
-                success: function (result) { alert(result); },
+                success: function (allData) {
+                    var mappedtags = $.map(allData, function (item) { return new Tag(item); });
+                    self.tags(mappedtags);
+                    self.configureTagAutocomplete();
+                },
                 error: function () { alert('error'); },
                 complete: function () {
                     $('#TagPartial').unblock();

@@ -132,7 +132,6 @@ namespace Web.Areas.Knockout.Controllers
         {
             Thread.Sleep(1000);
             var l = GetTagsFromDb();
-
             //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
             return Json(l, JsonRequestBehavior.AllowGet);
         }
@@ -173,7 +172,7 @@ namespace Web.Areas.Knockout.Controllers
 
             return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
         }
-        public ActionResult RemoveTag(TagViewModel tag)
+        public JsonResult RemoveTag(TagViewModel tag)
         {
             Thread.Sleep(1000);
             string r = string.Format("removed '{0}' from article", tag.name);
@@ -183,14 +182,15 @@ namespace Web.Areas.Knockout.Controllers
                 {
                     context.ArticleTags.Remove(at);
                 }
-                if (!context.ArticleTags.Any(x => x.Tag.Name == tag.name))
+                context.SaveChanges();
+                if (context.ArticleTags.Where(x => x.Tag.Name == tag.name ).Count() == 0)
                 {
                     context.Tags.Where(x => x.Name == tag.name).ToList().ForEach(y => context.Tags.Remove(y)); 
                     r = string.Format("removed tag '{0}' from article and tag '{0}'", tag.name);
                 }
                 context.SaveChanges();
             }
-            return Content(r);
+            return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
         } 
 
         /*
