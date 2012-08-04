@@ -190,7 +190,7 @@ namespace Web.Areas.Knockout.Controllers
         public ActionResult SaveTag(TagViewModel tag)
         {
             Thread.Sleep(1000);
-            var r = string.Format("article was tagged with {0}", tag.name);
+            var r = string.Format(" " );
             using (var context = new Context())
             {
                 var article = context.Articles.Find(articleId);
@@ -198,12 +198,12 @@ namespace Web.Areas.Knockout.Controllers
                 if (dbTag == null)
                 {
                     dbTag = context.Tags.Add(new Tag { Name = tag.name });
-                    r = string.Format("'{0}' was added to the db and article was tagged with '{0}'", tag.name);
-                }
-                if (context.ArticleTags.Any(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
+                    r = string.Format("'{0}' was added to the db : ", tag.name);
+                } 
+                if (!context.ArticleTags.Any(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
                 {
                     context.ArticleTags.Add(new ArticleTag { Article = article, Tag = dbTag });
-                    r = string.Format("article already has tag '{0}' ", tag.name);
+                    r += string.Format("added tag '{0}' ", tag.name); 
                 }
                 context.SaveChanges();
             }
@@ -221,7 +221,7 @@ namespace Web.Areas.Knockout.Controllers
                 }
                 if (!context.ArticleTags.Any(x => x.Tag.Name == tag.name))
                 {
-                    context.Tags.Where(x => x.Name == tag.name).ToList().ForEach(y => context.Tags.Remove(y));
+                    context.Tags.Where(x => x.Name == tag.name).ToList().ForEach(y => context.Tags.Remove(y)); 
                     r = string.Format("removed tag '{0}' from article and tag '{0}'", tag.name);
                 }
                 context.SaveChanges();

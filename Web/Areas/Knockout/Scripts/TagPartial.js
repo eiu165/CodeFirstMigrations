@@ -15,12 +15,9 @@ $(function () {
         self.newTagText = ko.observable();
         self.existingtags = ko.computed(function () {
             return ko.utils.arrayFilter(self.tags(), function (tag) { return tag.isInArticle() && !tag._destroy; });
-        });
-
-
+        }); 
         // Operations
-        self.addTag = function () {
-
+        self.addTag = function () { 
             self.newTagText($("#TagPartial #txtTag").val());
             var newTag = new Tag({ name: self.newTagText(), isInArticle: true });
             self.tags.push(newTag);
