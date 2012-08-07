@@ -40,6 +40,77 @@ namespace Web.Areas.Knockout.Controllers
         }
 
 
+
+
+        public JsonResult GetTags()
+        {
+            Thread.Sleep(300);
+            var l = GetTagsFromDb();
+            //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
+            return Json(l, JsonRequestBehavior.AllowGet);
+        }
+
+        private IQueryable<TagViewModel> GetTagsFromDb()
+        {
+            using (var context = new Context())
+            {
+                var list = (from t in _context.Tags
+                            group t by new { t.Id, t.Name }
+                                into grp
+                                select new TagViewModel
+                                {
+                                    tagId = grp.Key.Id,
+                                    name = grp.Key.Name,
+                                    isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Article.Id == articleId).Where(x => x.Tag.Id == t.Id).Count()) > 0
+                                });
+                return list;
+            }
+        } 
+
+        public JsonResult SaveTag(TagViewModel tag)
+        {
+            Thread.Sleep(300);
+            using (var context = new Context())
+            {
+                var article = context.Articles.Find(articleId);
+                var dbTag = context.Tags.Where(x => x.Name == tag.name).FirstOrDefault();
+                if (dbTag == null)
+                {
+                    dbTag = context.Tags.Add(new Tag { Name = tag.name });
+                }
+                if (!context.ArticleTags.Any(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
+                {
+                    context.ArticleTags.Add(new ArticleTag { Article = article, Tag = dbTag });
+                }
+                context.SaveChanges();
+            }
+            return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
+        }
+
+        public JsonResult RemoveTag(TagViewModel tag)
+        {
+            Thread.Sleep(300);
+            string r = string.Format("removed '{0}' from article", tag.name);
+            using (var context = new Context())
+            {
+                foreach (var at in context.ArticleTags.Where(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
+                {
+                    context.ArticleTags.Remove(at);
+                }
+                context.SaveChanges();
+                if (context.ArticleTags.Where(x => x.Tag.Name == tag.name).Count() == 0)
+                {
+                    context.Tags.Where(x => x.Name == tag.name).ToList().ForEach(y => context.Tags.Remove(y));
+                    r = string.Format("removed tag '{0}' from article and tag '{0}'", tag.name);
+                }
+                context.SaveChanges();
+            }
+            return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
+        } 
+
+
+
+
         private readonly Context _context = new Context();
 
         public JsonResult GetTasks()
@@ -50,7 +121,7 @@ namespace Web.Areas.Knockout.Controllers
             //l.Add(new TaskViewModel { title = "Get hair dye, beard trimmer, dark glasses", isDone = false });
             //l.Add(new TaskViewModel { title = "Book taxi to airport", isDone = false });
 
-            Thread.Sleep(1000);
+            Thread.Sleep(300);
             
             var l = _context.Tasks.Select(x=> new TaskViewModel
                                                   {
@@ -65,7 +136,7 @@ namespace Web.Areas.Knockout.Controllers
 
         public ActionResult SaveTasks(TaskList list)
         {
-            Thread.Sleep(1000); 
+            Thread.Sleep(500); 
             var numberTasks = 0;
             var numberDone = 0;
             foreach (var t in _context.Tasks)
@@ -89,7 +160,7 @@ namespace Web.Areas.Knockout.Controllers
 
         public JsonResult GetCategories()
         { 
-            Thread.Sleep(1000); 
+            Thread.Sleep(500); 
             var l = _context.Categories.Select(x => new CategoryViewModel 
             {
                 name = x.Name 
@@ -125,103 +196,9 @@ namespace Web.Areas.Knockout.Controllers
                 _articleId = _context.Articles.FirstOrDefault().Id;
                 return _articleId;
             }
-        }
-
-
-        public JsonResult GetTags()
-        {
-            Thread.Sleep(1000);
-            var l = GetTagsFromDb();
-            //return Json(new { title = "aaa", list = l }, JsonRequestBehavior.AllowGet);
-            return Json(l, JsonRequestBehavior.AllowGet);
-        }
-
-        private IQueryable<TagViewModel> GetTagsFromDb()
-        {
-            var l = (from t in _context.Tags
-                     group t by new { t.Id, t.Name } into grp
-                     select new TagViewModel
-                     {
-                         tagId = grp.Key.Id,
-                         name = grp.Key.Name,
-                         isInArticle = grp.Sum(t => _context.ArticleTags.Where(x => x.Article.Id == articleId).Where(x => x.Tag.Id == t.Id).Count()) > 0
-                     });
-            return l;
-        }
-
-
-
-         
-        public JsonResult SaveTag(TagViewModel tag)
-        {
-            Thread.Sleep(1000); 
-            using (var context = new Context())
-            {
-                var article = context.Articles.Find(articleId);
-                var dbTag = context.Tags.Where(x => x.Name == tag.name).FirstOrDefault();
-                if (dbTag == null)
-                {
-                    dbTag = context.Tags.Add(new Tag { Name = tag.name });
-                } 
-                if (!context.ArticleTags.Any(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
-                {
-                    context.ArticleTags.Add(new ArticleTag { Article = article, Tag = dbTag });
-                }
-                context.SaveChanges();
-            }
-
-            return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
-        }
-        public JsonResult RemoveTag(TagViewModel tag)
-        {
-            Thread.Sleep(1000);
-            string r = string.Format("removed '{0}' from article", tag.name);
-            using (var context = new Context())
-            {
-                foreach (var at in context.ArticleTags.Where(x => x.Article.Id == articleId && x.Tag.Name == tag.name))
-                {
-                    context.ArticleTags.Remove(at);
-                }
-                context.SaveChanges();
-                if (context.ArticleTags.Where(x => x.Tag.Name == tag.name ).Count() == 0)
-                {
-                    context.Tags.Where(x => x.Name == tag.name).ToList().ForEach(y => context.Tags.Remove(y)); 
-                    r = string.Format("removed tag '{0}' from article and tag '{0}'", tag.name);
-                }
-                context.SaveChanges();
-            }
-            return Json(this.GetTagsFromDb(), JsonRequestBehavior.AllowGet); //Content(r);
         } 
-
-        /*
-        public ActionResult SaveTags(TagList list)
-        {
-            using (var ctx = new Context())
-            {
-                using (var scope = new TransactionScope())
-                { 
-                    var article = ctx.Articles.Find(articleId);
-                    //ctx.ArticleTags.Where(x => x.Article.Id == articleId).ToList().ForEach(x => ctx.ArticleTags.DeleteObject(x));
-                    ctx.Database.ExecuteSqlCommand("Delete from ArticleTags where Article_Id = {0}", articleId);
-
-                    var tags = ctx.Tags;
-                    foreach (TagViewModel t in list.tags)
-                    {
-                        var tag = tags.Where(x => x.Name == t.name).FirstOrDefault();
-                        if (tag == null)
-                        {
-                            tag = ctx.Tags.Add(new Tag {Name = t.name});
-                        }
-                        ctx.ArticleTags.Add(new ArticleTag {Article = article, Tag = tag});
-                    }
-                    ctx.SaveChanges();
-                    scope.Complete();
-                }
-            }
-
-            return Content(string.Format("the server got the tags "));
-        } */
     }
+
     public class TagList
     {
         public TagViewModel[] tags { get; set; }
