@@ -24,7 +24,6 @@ $(function () {
             self.save(newTag);
         };
         self.MapData = function (allData) {
-
             var mappedtags = $.map(allData, function (item) { return new Tag(item); });
             self.tags(mappedtags);
             self.configureTagAutocomplete();

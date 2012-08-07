@@ -83,6 +83,7 @@
     <Compile Include="Areas\Articles\Controllers\RegionPartialController.cs" />
     <Compile Include="Areas\Articles\Controllers\PageController.cs" />
     <Compile Include="Areas\Articles\Controllers\TagCloudPartialController.cs" />
+    <Compile Include="Areas\Knockout\Controllers\ArticlesController.cs" />
     <Compile Include="Areas\Knockout\Controllers\MainController.cs" />
     <Compile Include="Areas\Knockout\KnockoutAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -107,6 +108,7 @@
       <DependentUpon>DetailPartial.coffee</DependentUpon>
     </Content>
     <Content Include="Areas\Knockout\Scripts\CategoryPartial.js" />
+    <Content Include="Areas\Knockout\Scripts\ArticlePartial.js" />
     <Content Include="Areas\Knockout\Scripts\TagPartial.js" />
     <Content Include="Areas\Knockout\Scripts\TaskPartial.js" />
     <Content Include="Content\AdminPanel.css" />
@@ -209,6 +211,8 @@
     <Content Include="Areas\Knockout\Views\Main\Both.cshtml" />
     <Content Include="Areas\Knockout\Views\Shared\TagPartial.cshtml" />
     <Content Include="Areas\Knockout\Views\Main\Tags.cshtml" />
+    <Content Include="Areas\Knockout\Views\Articles\Index.cshtml" />
+    <Content Include="Areas\Knockout\Views\Shared\ArticlePartial.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -24,11 +24,11 @@ namespace Web.Areas.Knockout.Controllers
             return View();
         }
 
-        public ActionResult Tags()
+        public ActionResult Tags(int? id)
         {
+            Session["Tag-ArticleId"] = id ?? 1;
             return View();
-        }
-
+        } 
 
         public ActionResult Categories()
         {
@@ -37,8 +37,16 @@ namespace Web.Areas.Knockout.Controllers
         public ActionResult Both()
         {
             return View();
-        }
+        } 
 
+        private int? articleId
+        {
+            get
+            {
+                var aid = Convert.ToInt32(Session["Tag-ArticleId"] ?? "1");
+                return aid;
+            }
+        } 
 
 
 
@@ -184,19 +192,6 @@ namespace Web.Areas.Knockout.Controllers
             return Content(string.Format("the server got the categories "));
         }
 
-        private int? _articleId = null;
-        private int? articleId
-        {
-            get
-            {
-                if (_articleId != null)
-                {
-                    return _articleId;
-                }
-                _articleId = _context.Articles.FirstOrDefault().Id;
-                return _articleId;
-            }
-        } 
     }
 
     public class TagList
