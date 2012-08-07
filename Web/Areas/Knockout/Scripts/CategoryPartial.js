@@ -23,10 +23,13 @@ $(function () {
         };
         self.removeCategory = function (category) { self.categories.destroy(category); };
         self.save = function () {
+            $('#CategoryPartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' });
             $.ajax("/Knockout/Main/SaveCategories", {
                 data: ko.toJSON({ categories: self.existingcategories }),
                 type: "post", contentType: "application/json",
-                success: function (result) { alert(result); },
+                success: function (result) {
+                    $('#CategoryPartial').unblock();
+                },
                 error: function () { alert('error'); }
             });
         };
