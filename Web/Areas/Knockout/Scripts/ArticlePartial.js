@@ -14,28 +14,18 @@ $(function () {
         self.MapData = function (allData) {
             var mappedtags = $.map(allData, function (item) { return new Article(item); });
             self.articles(mappedtags);
-        };
-        self.linkToTags = function (id) {
-            alert(id);
-            //window.location = '~/Knockout/Main/Tags/' + id;
-        };
+        }; 
         self.deleteArticle = function (article) {
             $('#ArticlePartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' });
             self.articles.destroy(article);
             $.ajax("/Knockout/Articles/DeleteArticle", {
                 data: ko.toJSON({ article: article }),
                 type: "post", contentType: "application/json",
-                success: function (allData) {
-                    self.MapData(allData);
-                },
+                success: function (allData) {self.MapData(allData);},
                 error: function () { alert('error'); },
-                complete: function () {
-                    $('#ArticlePartial').unblock();
-                }
+                complete: function () {$('#ArticlePartial').unblock();}
             }); 
         };
-        
-
         self.load = function () {
             $('#ArticlePartial').block({ message: '<h3><img src="/Images/busy.gif" /> Just a moment...</h3>' });
             // Load initial state from server, convert it to Tag instances, then populate self.tags 
