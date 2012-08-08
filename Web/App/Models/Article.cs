@@ -5,12 +5,11 @@ using System.Web;
 using Massive;
 
 namespace Web.App.Models
-{
-    /*
+{ 
     public class Articles : DynamicModel
     {
         public Articles()
-            : base("ApplicationConnectionString", "Articles", "Id")
+            : base("context", "Articles", "Id")
         {
             //Test check-ins
         }
@@ -19,11 +18,10 @@ namespace Web.App.Models
     public class Tags : DynamicModel
     {
         public Tags()
-            : base("ApplicationConnectionString", "Tags", "Id")
+            : base("context", "Tags", "Id")
         {
             //Test check-ins
         }
-    }
-     */
+    } 
 
 }

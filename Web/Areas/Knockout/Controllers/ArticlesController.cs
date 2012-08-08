@@ -50,16 +50,20 @@ namespace Web.Areas.Knockout.Controllers
 
         private List<ArticleViewModel> GetArticlesFromDb()
         {
-            using (var context = new Context())
-            {
-                var list = from x in context.Articles 
-                            select new ArticleViewModel
-                            {
-                                id = x.Id,
-                                name = x.Name
-                            };
-                return list.ToList();
-            }
+            //using (var context = new Context())
+            //{
+            //    var list = from x in context.Articles 
+            //                select new ArticleViewModel
+            //                {
+            //                    id = x.Id,
+            //                    name = x.Name
+            //                };
+            //    return list.ToList();
+            //}
+            dynamic a = new Web.App.Models.Articles();
+            var l = (IEnumerable<dynamic>)a.All(where: " Name = @0  ", columns: "Id, Name", args: "TestArticle1");
+            var r = l.Select(x => new ArticleViewModel {id = x.Id, name = x.Name}).ToList<ArticleViewModel>();
+            return r; 
         } 
 
     }
