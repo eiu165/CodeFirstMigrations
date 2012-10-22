@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "ApiTest";
+}
+
+<h2>ApiTest</h2>
+
+
+@{
+    ViewBag.Title = "Home Page";
+} 
+
+<h3>We suggest the following:</h3>
+
+
+
+   
+<ul data-bind="foreach: instructors">
+    <li>
+        age:<span data-bind="text: Id"></span> 
+        type:<span data-bind="text: Name"></span>
+    </li>
+</ul>  
+ 
+
+@section Javascript { 
+    <script src="../Scripts/knockout-2.1.0.debug.js"></script>
+    <script src="../Scripts/Home.js"></script> 
+}

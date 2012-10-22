@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "TestApi";
+}
+
+<h2>TestApi</h2>
+
+
+   
+<ul data-bind="foreach: instructors">
+    <li>
+        age:<span data-bind="text: Id"></span> 
+        type:<span data-bind="text: Name"></span>
+    </li>
+</ul>  
+ 
+
+@section Javascript { 
+    <script src="../Scripts/knockout-2.1.0.debug.js"></script>
+    <script src="../Scripts/Home.js"></script> 
+}

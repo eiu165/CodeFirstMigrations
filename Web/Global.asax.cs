@@ -16,6 +16,13 @@ namespace Web
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+                "api", // Route name
+                "api/{controller}/{id}", // URL with parameters
+                new {   id = UrlParameter.Optional } // Parameter defaults
+            );
+
+
 			routes.MapRoute(
 				"Default", // Route name
 				"{controller}/{action}/{id}", // URL with parameters

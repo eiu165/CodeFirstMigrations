@@ -18,6 +18,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult TestApi()
+        {
+            return View();
+        }
+
 		public ActionResult Create(User user)
 		{
 			_context.Users.Add(user);
